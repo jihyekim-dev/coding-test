@@ -1,13 +1,21 @@
 function solution(X, Y) {
-  // 정수 문자열 X, Y의 짝꿍 문자열 구하기
-  // 짝꿍이 존재하지 않으면, -1 / 0으로만 구성되어 있다면, 0 return
-  const short = X.length > Y.length ? Y : X;
-  const long = [...(X.length > Y.length ? X : Y)];
+  // 문자열 정수 X와 Y의 짝꿍 문자열 return
+  // 짝꿍이 존재하지 않으면, '-1' / 0으로만 구성되었다면 '0' return
+  // X, Y에서 공통으로 나타나는 정수 = 0~9 사이의 정수
+  const duplication = new Map();
+  for (let i = 0; i < X.length; i++) {
+    let v = duplication.get(X[i]);
+    !v ? duplication.set(X[i], 1) : duplication.set(X[i], ++v);
+  }
+
   let pair = '';
-  for (let i = 0; i < short.length; i++) {
-    if (long.includes(short[i])) {
-      pair += short[i];
-      long.splice(long.indexOf(short[i]), 1).join('');
+  for (let i = 0; i < Y.length; i++) {
+    const k = Y[i];
+    let v = duplication.get(k);
+
+    if (v) {
+      pair += k;
+      !(v - 1) ? duplication.delete(k) : duplication.set(k, --v);
     }
   }
 
