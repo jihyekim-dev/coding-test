@@ -1,22 +1,15 @@
 function solution(ingredient) {
+  // 포장하는 햄버거 개수 return
+  // ingredient의 원소 1: 빵, 2: 야채, 3: 고기
+  // 햄버거 재료 쌓기 순서: 빵 – 야채 – 고기 - 빵 (1231)
+  const arr = [];
   let count = 0;
-  // 진짜 지우기는 해야 함...
-  // 근데 str replace는 효율이 안 나옴
-  // 그럼 ingredient arr를 index = key, value = value 삼아서 obj 또는 map으로 만들면?
-  // 이러면 delete가 쉽잫아 바로 접근가능해서 O(1)이구!!
-  for (let front = 0; front < ingredient.length - 3; ) {
-    const one = ingredient[front];
-    const two = ingredient[front + 1];
-    const three = ingredient[front + 2];
-    const four = ingredient[front + 3];
-    console.log('front', front, ' : ', one, two, three, four, count);
-    if (one === 1 && two === 2 && three === 3 && four === 1) {
+  for (let i = 0; i < ingredient.length; i++) {
+    arr.push(ingredient[i]);
+    if (arr.slice(-4).join('') === '1231') {
       count++;
-      front += 4;
-    } else {
-      front++;
+      arr.splice(-4, 4);
     }
   }
-
   return count;
 }
